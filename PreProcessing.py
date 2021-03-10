@@ -18,17 +18,14 @@ def tokenFrequency (stringInput):
             tokens[word]=1
     return tokens
     
-def replaceToUNK(file,TokensList):
-    #open the file and get text
-    inputFile = open(file, encoding="utf8")
-    fileText = inputFile.read()
-    pdb.set_trace()##DEBUGGER
-    #do replacement on current text 
-    for token in TokensList.keys():
-            fileText = fileText.replace(token,"<unk>")#TODO:defined its token key and not value we are using
-    
-    inputFile.close()
-    
+def replaceToUNK(fileText,tokensDic,file):
+    #Replacement on current text 
+    tokenList = list(tokensDic.keys())
+
+    for word in fileText.split(): #TODO:Fix issue with spacing when replacing words.
+            if word in tokenList:
+                fileText = fileText.replace(word+" ","<unk>")
+    #pdb.set_trace()##DEBUGGER
     #write text changes to file
     inputWriteFile = open(file, "w")
     inputWriteFile.write(fileText)
